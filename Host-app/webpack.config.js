@@ -2,14 +2,21 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin.js';
+import webpack from 'webpack';
+import dotenv from 'dotenv';
+import { expand as dotenvExpand } from 'dotenv-expand';
+// dotenv.config({ path: './.env' });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
+const env = dotenv.config();
+console.log(process.env.REACT_APP_ENV);
+dotenvExpand(env);
 export default {
 	entry: './index.js',
 	mode: 'development',
 	output: {
+		publicPath: 'auto',
 		path: path.resolve(__dirname, './dist'),
 		filename: 'index_bundle.js',
 	},
@@ -31,16 +38,24 @@ export default {
 			{
 				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
-				use: 'babel-loader',
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['@babel/preset-env', '@babel/preset-react'],
+					},
+				},
 			},
 		],
 	},
 	plugins: [
+		new webpack.DefinePlugin({
+			'process.env': JSON.stringify(process.env),
+		}),
 		new ModuleFederationPlugin({
 			name: 'HostApp',
 			filename: 'remoteEntry.js',
 			remotes: {
-				RemoteApp: 'RemoteApp@http://localhost:8081/remoteEntry.js',
+				RemoteApp: `RemoteApp@${process.env.REACT_APP_ENV}/remoteEntry.js`,
 			},
 			exposes: {},
 			shared: {

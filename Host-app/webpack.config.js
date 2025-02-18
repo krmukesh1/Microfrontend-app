@@ -5,7 +5,6 @@ import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin
 import webpack from 'webpack';
 import dotenv from 'dotenv';
 import { expand as dotenvExpand } from 'dotenv-expand';
-// dotenv.config({ path: './.env' });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -55,7 +54,7 @@ export default {
 			name: 'HostApp',
 			filename: 'remoteEntry.js',
 			remotes: {
-				RemoteApp: `RemoteApp@${process.env.REACT_APP_ENV}/remoteEntry.js`,
+				RemoteApp2: `RemoteApp@${process.env.REACT_APP_ENV}remoteEntry.js`,
 			},
 			exposes: {},
 			shared: {

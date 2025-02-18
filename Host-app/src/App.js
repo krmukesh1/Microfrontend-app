@@ -5,14 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleVisibility } from '../services/contentValidationSlice';
 import ErrorBoundary from '../ErrorBoundary';
 
-// const RemoteApp = React.lazy(() => import('RemoteApp/App'));
-const RemoteApp = React.lazy(() =>
-	import('RemoteApp/App').catch(() => {
-		return {
-			default: () => <React.Fragment>Component unavailable!</React.Fragment>,
-		};
-	})
-);
+const RemoteApp2 = React.lazy(() => import('RemoteApp2/App'));
 const App = () => {
 	const dispatch = useDispatch();
 	const isVisible = useSelector((state) => state.isVisible.isVisible);
@@ -27,7 +20,7 @@ const App = () => {
 			<Counter />
 			<Suspense fallback={<div>Loading...</div>}>
 				<ErrorBoundary>
-					<RemoteApp />
+					<RemoteApp2 />
 				</ErrorBoundary>
 			</Suspense>
 		</div>

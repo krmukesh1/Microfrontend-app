@@ -5,12 +5,16 @@ import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin
 import webpack from 'webpack';
 import dotenv from 'dotenv';
 import { expand as dotenvExpand } from 'dotenv-expand';
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const env = dotenv.config();
 console.log(process.env.REACT_APP_ENV);
 dotenvExpand(env);
+
+const configPath = path.resolve(__dirname, './remoteConfig.json');
+const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
 export default {
 	entry: './index.js',
 	mode: 'development',
@@ -53,9 +57,7 @@ export default {
 		new ModuleFederationPlugin({
 			name: 'HostApp',
 			filename: 'remoteEntry.js',
-			remotes: {
-				RemoteApp2: `RemoteApp@${process.env.REACT_APP_ENV}remoteEntry.js`,
-			},
+			remotes: { ...config },
 			exposes: {},
 			shared: {
 				react: { singleton: true, requiredVersion: false },

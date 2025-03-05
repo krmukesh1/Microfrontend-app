@@ -41,7 +41,7 @@ export default {
 			filename: 'remoteEntry.js',
 			remotes: {},
 			exposes: {
-				'./App': './src/App',
+				'./RemoteApp': './src/RemoteApp',
 			},
 			shared: {
 				react: { eager: true, singleton: true, requiredVersion: false },

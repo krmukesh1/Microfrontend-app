@@ -3,7 +3,7 @@ import APIcall from './pages/APIcall';
 import Counter from './components/Counter';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleVisibility } from '../services/contentValidationSlice';
-const App = () => {
+const RemoteApp = () => {
 	const dispatch = useDispatch();
 	const isVisible = useSelector((state) => state.isVisible.isVisible);
 	const handleToggle = React.useCallback(() => {
@@ -20,4 +20,4 @@ const App = () => {
 	);
 };
 
-export default App;
+export default RemoteApp;

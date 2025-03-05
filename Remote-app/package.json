@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "webpack-dev-server .",
+		"start": "webpack-dev-server --hot",
 		"build": "webpack .",
 		"lint": "eslint . --fix --max-warnings=0",
 		"format": "prettier . --write",

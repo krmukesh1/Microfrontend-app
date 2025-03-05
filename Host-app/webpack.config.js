@@ -6,6 +6,9 @@ import webpack from 'webpack';
 import dotenv from 'dotenv';
 import { expand as dotenvExpand } from 'dotenv-expand';
 import fs from 'fs';
+const { dependencies: deps } = JSON.parse(
+	fs.readFileSync('./package.json', 'utf-8')
+);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -60,8 +63,8 @@ export default {
 			remotes: { ...config },
 			exposes: {},
 			shared: {
-				react: { singleton: true, requiredVersion: false },
-				'react-dom': { singleton: true, requiredVersion: false },
+				react: { singleton: true, requiredVersion: deps.react },
+				'react-dom': { singleton: true, requiredVersion: deps['react-dom'] },
 			},
 		}),
 		new HtmlWebpackPlugin({
